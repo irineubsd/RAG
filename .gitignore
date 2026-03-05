@@ -1,0 +1,9 @@
+# data
+data/input/
+data/chroma/
+
+# env
+.env
+.venv/
+__pycache__/
+*.pyc
