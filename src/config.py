@@ -11,7 +11,9 @@ CHROMA_PERSIST_DIR = os.getenv("CHROMA_PERSIST_DIR", "./data/chroma")
 
 CSV_PATH = os.environ["CSV_PATH"]
 CSV_ID_COLUMN = os.getenv("CSV_ID_COLUMN", "ticket_number")
-CSV_DELIMITER = os.getenv("CSV_DELIMITER", "\t")  # seu arquivo é TSV por padrão
+CSV_DELIMITER_RAW = os.getenv("CSV_DELIMITER", "\t")
+# Permite escrever "\t" no .env e virar TAB real
+CSV_DELIMITER = CSV_DELIMITER_RAW.encode("utf-8").decode("unicode_escape")
 
 TOP_K = int(os.getenv("TOP_K", "6"))
 COLLECTION_NAME = os.getenv("COLLECTION_NAME", "tickets")
