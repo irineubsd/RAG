@@ -17,7 +17,7 @@ PROMPT = ChatPromptTemplate.from_messages(
             "system",
             "Você é um analista de suporte. Responda SOMENTE com base no CONTEXTO. "
             "Se faltar informação no contexto, diga exatamente o que falta. "
-            "Sempre cite fontes usando row_id (ticket_number). "
+            "Sempre cite fontes usando row_id. "
             "Se houver múltiplas fontes, cite todas relevantes.",
         ),
         ("human", "PERGUNTA:\n{question}\n\nCONTEXTO:\n{context}\n"),
@@ -35,6 +35,8 @@ def format_context(docs) -> str:
 
 def main() -> None:
     question = input("Pergunta> ").strip()
+    if not question:
+        raise ValueError("Pergunta vazia. Informe uma pergunta antes de consultar.")
 
     embeddings = OllamaEmbeddings(model=OLLAMA_EMBED_MODEL, base_url=OLLAMA_BASE_URL)
     vs = Chroma(
@@ -44,6 +46,10 @@ def main() -> None:
     )
 
     docs = vs.similarity_search(question, k=TOP_K)
+    if not docs:
+        print("\nNenhum contexto encontrado para a pergunta.")
+        return
+
     context = format_context(docs)
 
     llm = OllamaLLM(model=OLLAMA_CHAT_MODEL, base_url=OLLAMA_BASE_URL)

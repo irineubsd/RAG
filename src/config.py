@@ -9,7 +9,7 @@ OLLAMA_EMBED_MODEL = os.getenv("OLLAMA_EMBED_MODEL", "nomic-embed-text")
 
 CHROMA_PERSIST_DIR = os.getenv("CHROMA_PERSIST_DIR", "./data/chroma")
 
-CSV_PATH = os.environ["CSV_PATH"]
+CSV_PATH = os.getenv("CSV_PATH")
 CSV_ID_COLUMN = os.getenv("CSV_ID_COLUMN", "ticket_number")
 CSV_DELIMITER_RAW = os.getenv("CSV_DELIMITER", "\t")
 # Permite escrever "\t" no .env e virar TAB real
